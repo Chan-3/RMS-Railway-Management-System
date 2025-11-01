@@ -62,50 +62,49 @@ Templates: Jinja2
 ------------------------------------------------------------
 
 RMS-Railway-Management-System/
-│
-│  app.py                               → Main Flask entry point
-│  config.py                            → App + DB configuration
-│  pswd.py                              → Hashes default passwords
-│  secretkey.py                         → Generates secret.txt file (copy key into .env)
-│  requirements.txt                     → Python dependencies list
-│  README.md                            → Project documentation
-│
-├─ blueprints/                          → Route handlers by role
-│     admin.py                          → Admin routes
-│     auth.py                           → Login/Register routes
-│     employee.py                       → Employee routes
-│     passenger.py                      → Passenger routes
-│     supervisor.py                     → Supervisor routes
-│     main.py                           → Public/Home routes
-│
-├─ services/                            → Business logic
-│     admin_service.py
-│     auth_service.py
-│     booking_service.py
-│     employee_service.py
-│     history_service.py
-│     search_service.py
-│     supervisor_service.py
-│
-├─ utils/                               → Helpers
-│     decorators.py                     → Role-based access control
-│
-├─ database/                            → DB setup + SQL scripts
-│     connection.py                     → MySQL connection helper
-│     schema.sql                        → Table creation
-│     seed_data.sql                     → Initial data
-│     functions.sql                     → DB functions
-│     procedures.sql                    → Stored procedures
-│     triggers.sql                      → DB triggers
-│
-└─ templates/                           → HTML / Jinja2 UI
-      home.html                         → Landing page
-      layout.html                       → Base UI layout
-      admin/                            → Admin UI
-      auth/                             → Login / Register UI
-      employee/                         → Employee UI
-      passenger/                        → Passenger UI
-      supervisor/                       → Supervisor UI
+- app.py              → Main Flask entry point
+- config.py           → App + DB configuration
+- pswd.py             → Password hashing helper
+- secretkey.py        → Generates secret.txt (copy key into .env)
+- requirements.txt    → Python dependencies
+- README.md           → Documentation
+
+blueprints/           → Route handlers by role
+- admin.py            → Admin routes
+- auth.py             → Login/Register routes
+- employee.py         → Employee routes
+- passenger.py        → Passenger routes
+- supervisor.py       → Supervisor routes
+- main.py             → Public/Home routes
+
+services/             → Business logic
+- admin_service.py
+- auth_service.py
+- booking_service.py
+- employee_service.py
+- history_service.py
+- search_service.py
+- supervisor_service.py
+
+utils/                → Helper utilities
+- decorators.py       → Role-based access control
+
+database/             → DB setup + SQL scripts
+- connection.py       → DB connector
+- schema.sql          → Table creation
+- seed_data.sql       → Initial data
+- functions.sql       → SQL functions
+- procedures.sql      → Stored procedures
+- triggers.sql        → DB triggers
+
+templates/            → Jinja2 HTML templates (UI)
+- home.html           → Landing page
+- layout.html         → Base layout
+- admin/              → Admin UI pages
+- auth/               → Login/Register UI pages
+- employee/           → Employee UI pages
+- passenger/          → Passenger UI pages
+- supervisor/         → Supervisor UI pages
 
 
 ------------------------------------------------------------
@@ -162,15 +161,11 @@ Create `.env` in root:
     DB_PASSWORD=YOUR_DB_PASSWORD
     DB_NAME=rms
 
-Generate secret key:
-Run:
+Generate SECRET_KEY:
     python secretkey.py
 
-Output:
-    secret.txt generated → contains SECRET_KEY
-
-Copy the value → paste into .env →  
-    SECRET_KEY=<value>
+→ This creates `secret.txt`  
+→ Open secret.txt → copy generated key → paste into `.env` under SECRET_KEY=YOUR_SECRET_KEY
 
 
 ------------------------------------------------------------
