@@ -62,12 +62,13 @@ Templates: Jinja2
 ------------------------------------------------------------
 
 RMS-Railway-Management-System/
+│
 │  app.py                               → Main Flask entry point
 │  config.py                            → App + DB configuration
-│  pswd.py                              → Password hashing helper
-│  secretkey.py                         → Secret key generator
-│  requirements.txt                     → Python dependencies
-│  README.md                            → Documentation
+│  pswd.py                              → Hashes default passwords
+│  secretkey.py                         → Generates secret.txt file (copy key into .env)
+│  requirements.txt                     → Python dependencies list
+│  README.md                            → Project documentation
 │
 ├─ blueprints/                          → Route handlers by role
 │     admin.py                          → Admin routes
@@ -75,7 +76,7 @@ RMS-Railway-Management-System/
 │     employee.py                       → Employee routes
 │     passenger.py                      → Passenger routes
 │     supervisor.py                     → Supervisor routes
-│     main.py                           → Public/Home route
+│     main.py                           → Public/Home routes
 │
 ├─ services/                            → Business logic
 │     admin_service.py
@@ -86,25 +87,26 @@ RMS-Railway-Management-System/
 │     search_service.py
 │     supervisor_service.py
 │
-├─ utils/                               → Utility scripts
-│     decorators.py                     → Role-based access
+├─ utils/                               → Helpers
+│     decorators.py                     → Role-based access control
 │
-├─ database/                            → DB setup + scripts
-│     connection.py                     → DB connector
+├─ database/                            → DB setup + SQL scripts
+│     connection.py                     → MySQL connection helper
 │     schema.sql                        → Table creation
 │     seed_data.sql                     → Initial data
 │     functions.sql                     → DB functions
 │     procedures.sql                    → Stored procedures
 │     triggers.sql                      → DB triggers
 │
-└─ templates/                           → HTML/Jinja2 UI
+└─ templates/                           → HTML / Jinja2 UI
       home.html                         → Landing page
-      layout.html                       → Base layout
+      layout.html                       → Base UI layout
       admin/                            → Admin UI
-      auth/                             → Login/Register
+      auth/                             → Login / Register UI
       employee/                         → Employee UI
       passenger/                        → Passenger UI
       supervisor/                       → Supervisor UI
+
 
 ------------------------------------------------------------
 4) Setup
@@ -161,10 +163,15 @@ Create `.env` in root:
     DB_NAME=rms
 
 Generate secret key:
-    python secretkey.py  
-Copy output → paste into `.env`
+Run:
+    python secretkey.py
 
-(Do NOT commit `.env`)
+Output:
+    secret.txt generated → contains SECRET_KEY
+
+Copy the value → paste into .env →  
+    SECRET_KEY=<value>
+
 
 ------------------------------------------------------------
 7) Role Usage Summary
@@ -207,6 +214,3 @@ python-dotenv               → Load .env config
 mysql-connector-python      → MySQL connector library  
 Werkzeug                    → Security + hashing utilities  
 
-------------------------------------------------------------
-End of File
-------------------------------------------------------------
