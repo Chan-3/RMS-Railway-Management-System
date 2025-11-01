@@ -1,8 +1,8 @@
 # Railway Management System (RMS)
 
-The Railway Management System (RMS) is a web-based software solution designed to simplify and automate the management of major railway operations. Railways transport millions of passengers daily, and traditional manual workflows often lead to booking conflicts, delayed operations, inefficient staff allocation, and incomplete record keeping. RMS addresses these challenges by offering a unified digital platform for passengers, administrators, supervisors, and staff.
+The Railway Management System (RMS) is a web-based application designed to streamline key railway operations such as ticket booking, route planning, scheduling, employee assignment, and passenger management. Railways transport millions daily, and traditional manual handling often causes double bookings, scheduling conflicts, data inconsistency, and inefficiency.
 
-The system provides secure ticket booking, route planning, schedule management, and centralized database operations. Staff and supervisors can review operational tasks, update route or train information, report issues, and monitor schedules. Administrators can oversee the entire network including employees, stations, trains, and revenue reporting. RMS ultimately ensures faster processing, improved transparency, accuracy in decision-making, and better passenger service delivery.
+RMS provides digitized workflows, structured storage, real-time retrieval, role-based access, and efficient reporting. This ensures greater accuracy, faster processing, reduced human error, and improved user experience for passengers, employees, supervisors, and administrators.
 
 ------------------------------------------------------------
 1) Features by Role
@@ -15,16 +15,16 @@ Admin
 - Manage Trains (create / edit / delete)
 - Manage Passengers (view / search / delete / activate–deactivate)
 - Manage Employees (create / edit / update role + salary / activate–deactivate / assign supervisor)
-- View Reports: revenue, bookings, employee–train assignment
+- View Reports (revenue / bookings / assignments)
 
 Supervisor
 - Dashboard
-- Manage employees (view / update role & salary)
-- Train assignments (assign employee → train / remove assignment)
-- Work scheduling (create / delete / view by date)
-- Train status updates
-- View bookings (filter by name / train / date)
-- Review employee reports (view / update status)
+- Manage employees (view / edit role & salary)
+- Assign / unassign employees to trains
+- Create / delete schedules (filter by date)
+- Update train operational status
+- Filter bookings by name / train / date
+- View + update employee reports status
 
 Employee
 - Dashboard
@@ -34,14 +34,14 @@ Employee
 - View bookings for assigned train
 - View assigned trains
 - View scheduled shifts
-- Submit/view reports to supervisor
+- Submit/view reports
 
 Passenger
 - Dashboard
 - Register/Login
 - View/update profile
 - Search trains by source → destination
-- Book ticket (seat type, count, date, payment mode)
+- Book ticket (seat type, count, date, payment)
 - Cancel ticket
 - View booking history
 
@@ -52,178 +52,137 @@ Passenger
 Backend: Flask  
 Database: MySQL  
 Auth: Session + role-based access  
-Environment variable support: python-dotenv  
+Environment variables: python-dotenv  
 Password hashing: Werkzeug  
 DB Connector: mysql-connector-python  
 Templates: Jinja2  
 
 ------------------------------------------------------------
-3) Project Structure (with inline explanation)
-------------------------------------------------------------
-
-------------------------------------------------------------
 3) Project Structure
 ------------------------------------------------------------
 
-RMS-Railway-Management-System/     (root project directory)
-│ app.py                           (main Flask entry point to start the server)
-│ config.py                        (application + DB configuration settings)
-│ pswd.py                          (helper script to hash default passwords)
-│ secretkey.py                     (script to generate SECRET_KEY value)
-│ requirements.txt                 (Python dependencies list)
-│ README.md                        (project documentation)
+RMS-Railway-Management-System/
+│  app.py                               → Main Flask entry point
+│  config.py                            → App + DB configuration
+│  pswd.py                              → Password hashing helper
+│  secretkey.py                         → Secret key generator
+│  requirements.txt                     → Python dependencies
+│  README.md                            → Documentation
 │
-├─ blueprints/                     (role-based route controllers)
-│   admin.py                       (admin routes)
-│   auth.py                        (authentication routes: login/register/logout)
-│   employee.py                    (employee routes)
-│   passenger.py                   (passenger routes)
-│   supervisor.py                  (supervisor routes)
-│   main.py                        (public/home route)
+├─ blueprints/                          → Route handlers by role
+│     admin.py                          → Admin routes
+│     auth.py                           → Login/Register routes
+│     employee.py                       → Employee routes
+│     passenger.py                      → Passenger routes
+│     supervisor.py                     → Supervisor routes
+│     main.py                           → Public/Home route
 │
-├─ services/                       (business logic for modules)
-│   admin_service.py               (admin operations logic)
-│   auth_service.py                (user auth + session handling)
-│   booking_service.py             (ticket booking operations)
-│   employee_service.py            (employee operations)
-│   history_service.py             (booking history)
-│   search_service.py              (train search logic)
-│   supervisor_service.py          (supervisor operations)
+├─ services/                            → Business logic
+│     admin_service.py
+│     auth_service.py
+│     booking_service.py
+│     employee_service.py
+│     history_service.py
+│     search_service.py
+│     supervisor_service.py
 │
-├─ utils/                          (helper modules)
-│   decorators.py                  (role-based access control helper)
+├─ utils/                               → Utility scripts
+│     decorators.py                     → Role-based access
 │
-├─ database/                       (database build + connection)
-│   connection.py                  (MySQL connection helper)
-│   schema.sql                     (table creation)
-│   seed_data.sql                  (initial records)
-│   functions.sql                  (SQL functions)
-│   procedures.sql                 (stored procedures)
-│   triggers.sql                   (triggers)
-│   path.txt                       (reference path info)
+├─ database/                            → DB setup + scripts
+│     connection.py                     → DB connector
+│     schema.sql                        → Table creation
+│     seed_data.sql                     → Initial data
+│     functions.sql                     → DB functions
+│     procedures.sql                    → Stored procedures
+│     triggers.sql                      → DB triggers
 │
-└─ templates/                      (HTML Jinja2 templates)
-    home.html                      (public landing page)
-    layout.html                    (base UI layout for pages)
-    │
-    ├─ admin/                      (admin UI pages)
-    ├─ auth/                       (login/register pages)
-    ├─ employee/                   (employee UI pages)
-    ├─ passenger/                  (passenger UI pages)
-    └─ supervisor/                 (supervisor UI pages)
-
+└─ templates/                           → HTML/Jinja2 UI
+      home.html                         → Landing page
+      layout.html                       → Base layout
+      admin/                            → Admin UI
+      auth/                             → Login/Register
+      employee/                         → Employee UI
+      passenger/                        → Passenger UI
+      supervisor/                       → Supervisor UI
 
 ------------------------------------------------------------
 4) Setup
 ------------------------------------------------------------
 
-Clone project (Git):
-git clone https://github.com/Chan-3/RMS-Railway-Management-System.git
-cd RMS-Railway-Management-System
+Clone Project:
+    git clone https://github.com/Chan-3/RMS-Railway-Management-System.git
+    cd RMS-Railway-Management-System
 
-Create virtual environment:
-python -m venv venv
+Create Virtual Environment:
+    python -m venv venv
 
 Activate (Windows):
-venv\Scripts\Activate.ps1
+    venv\Scripts\Activate.ps1
 
 Activate (Mac/Linux):
-source venv/bin/activate
+    source venv/bin/activate
 
-Install requirements:
-pip install -r requirements.txt
+Install Dependencies:
+    pip install -r requirements.txt
 
 ------------------------------------------------------------
 5) Database Setup (MySQL)
 ------------------------------------------------------------
 
-Database can be initialized in two ways.
+OPTION A — From VS Code / CMD
+    mysql -u <username> -p
 
-----------------------------------------
-Method-1: Using VS Code terminal / CMD
-----------------------------------------
+    SOURCE database/schema.sql;
+    SOURCE database/seed_data.sql;
+    SOURCE database/functions.sql;
+    SOURCE database/procedures.sql;
+    SOURCE database/triggers.sql;
 
-mysql -u <username> -p
+OPTION B — From MySQL CLI
 
-Inside MySQL:
-CREATE DATABASE IF NOT EXISTS rms;
-USE rms;
-
-Execute SQL files in order:
-SOURCE database/schema.sql;
-SOURCE database/seed_data.sql;
-SOURCE database/functions.sql;
-SOURCE database/procedures.sql;
-SOURCE database/triggers.sql;
-
-----------------------------------------
-Method-2: Using MySQL CLI directly
-----------------------------------------
-
-CREATE DATABASE IF NOT EXISTS rms;
-USE rms;
-
-Then run:
-SOURCE /absolute/path/to/schema.sql;
-SOURCE /absolute/path/to/seed_data.sql;
-SOURCE /absolute/path/to/functions.sql;
-SOURCE /absolute/path/to/procedures.sql;
-SOURCE /absolute/path/to/triggers.sql;
+    SOURCE /absolute/path/schema.sql;
+    SOURCE /absolute/path/seed_data.sql;
+    SOURCE /absolute/path/functions.sql;
+    SOURCE /absolute/path/procedures.sql;
+    SOURCE /absolute/path/triggers.sql;
 
 ------------------------------------------------------------
 6) Environment Setup
 ------------------------------------------------------------
 
-Create `.env` in project root:
+Create `.env` in root:
 
-FLASK_ENV=development
-SECRET_KEY=YOUR_SECRET_KEY
-DB_HOST=localhost
-DB_USER=YOUR_DB_USER
-DB_PASSWORD=YOUR_DB_PASSWORD
-DB_NAME=rms
+    FLASK_ENV=development
+    SECRET_KEY=YOUR_SECRET_KEY
+    DB_HOST=localhost
+    DB_USER=YOUR_DB_USER
+    DB_PASSWORD=YOUR_DB_PASSWORD
+    DB_NAME=rms
+
+Generate secret key:
+    python secretkey.py  
+Copy output → paste into `.env`
 
 (Do NOT commit `.env`)
 
 ------------------------------------------------------------
-7) Generate Secret Key
-------------------------------------------------------------
-
-python secretkey.py  
-Copy the key → paste into .env under SECRET_KEY=
-
-------------------------------------------------------------
-8) Hash Default Passwords
-------------------------------------------------------------
-
-python pswd.py  
-(Generates hashed passwords for admin/supervisor/employee)
-
-------------------------------------------------------------
-9) Run Application
-------------------------------------------------------------
-
-python app.py  
-Open in browser:  
-http://127.0.0.1:5000  
-
-------------------------------------------------------------
-10) Role Usage Summary
+7) Role Usage Summary
 ------------------------------------------------------------
 
 Passenger:
 - Register / login
 - Search → book → cancel
-- View history
+- View bookings
 - Update profile
 
 Supervisor:
-- Manage employees (scoped)
+- Manage scoped employees
 - Assign trains
-- Create/delete schedules
+- Create/Delete schedules
 - Update train status
-- Booking filter
-- Manage employee reports
+- Filter bookings
+- Handle employee reports
 
 Employee:
 - View trains
@@ -237,25 +196,17 @@ Admin:
 - View reports
 
 ------------------------------------------------------------
-11) requirements.txt
+8) requirements.txt
 ------------------------------------------------------------
 
-Purpose: Lists required Python packages.  
-Used for environment setup with:  
-pip install -r requirements.txt  
+Purpose: Defines application dependencies for easy setup via  
+    pip install -r requirements.txt  
 
-Flask  
-(Framework for building the backend server and routing)
-
-python-dotenv  
-(Reads configuration values securely from .env file)
-
-mysql-connector-python  
-(Enables connection between Python backend and MySQL database)
-
-Werkzeug  
-(Provides utilities including password hashing + security helpers)
+Flask                       → Core backend framework  
+python-dotenv               → Load .env config  
+mysql-connector-python      → MySQL connector library  
+Werkzeug                    → Security + hashing utilities  
 
 ------------------------------------------------------------
-.end
+End of File
 ------------------------------------------------------------
