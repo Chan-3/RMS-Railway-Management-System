@@ -49,13 +49,13 @@ Passenger
 2) Tech Stack
 ------------------------------------------------------------
 
-Backend: Flask  
-Database: MySQL  
-Auth: Session + role-based access  
-Environment variables: python-dotenv  
-Password hashing: Werkzeug  
-DB Connector: mysql-connector-python  
-Templates: Jinja2  
+Backend: `Flask`  
+Database: `MySQL`  
+Auth: `Session + role-based access`  
+Environment variables: `python-dotenv`  
+Password hashing: `Werkzeug`  
+DB Connector: `mysql-connector-python`  
+Templates: `Jinja2`  
 
 ------------------------------------------------------------
 3) Project Structure
@@ -211,8 +211,8 @@ Purpose: Defines application dependencies for easy setup via
     
     pip install -r requirements.txt  
 
-Flask                       → Core backend framework  
-python-dotenv               → Load .env config  
-mysql-connector-python      → MySQL connector library  
-Werkzeug                    → Security + hashing utilities  
+`Flask`                       → Core backend framework  
+`python-dotenv`               → Load .env config  
+`mysql-connector-python`      → MySQL connector library  
+`Werkzeug`                    → Security + hashing utilities  
 
