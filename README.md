@@ -112,19 +112,25 @@ templates/            → Jinja2 HTML templates (UI)
 ------------------------------------------------------------
 
 Clone Project:
+   
     git clone https://github.com/Chan-3/RMS-Railway-Management-System.git
+    
     cd RMS-Railway-Management-System
 
 Create Virtual Environment:
+    
     python -m venv venv
 
 Activate (Windows):
+    
     venv\Scripts\Activate.ps1
 
 Activate (Mac/Linux):
+    
     source venv/bin/activate
 
 Install Dependencies:
+    
     pip install -r requirements.txt
 
 ------------------------------------------------------------
@@ -164,7 +170,7 @@ Create `.env` in root:
 Generate SECRET_KEY:
     python secretkey.py
 
-→ This creates `secret.txt`  
+→ This creates `secrets.txt`  
 → Open secret.txt → copy generated key → paste into `.env` under SECRET_KEY=YOUR_SECRET_KEY
 
 
@@ -202,6 +208,7 @@ Admin:
 ------------------------------------------------------------
 
 Purpose: Defines application dependencies for easy setup via  
+    
     pip install -r requirements.txt  
 
 Flask                       → Core backend framework  
