@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Page container -->
+<div class="container mt-4">
+
+  <h2>Employees</h2>
+  <hr>
+
+  <!-- Search -->
+  <form class="d-flex mb-3" method="get">
+    <input class="form-control me-2" type="search" name="q"
+           placeholder="Search name/email" value="{{ q }}">
+    <button class="btn btn-primary">Search</button>
+  </form>
+
+  <!-- Table -->
+  {% if rows %}
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th><th>Name</th><th>Email</th>
+        <th>Role</th><th>Salary</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in rows %}
+      <tr>
+        <td>{{ e.emp_id }}</td>
+        <td>{{ e.first_name }} {{ e.last_name }}</td>
+        <td>{{ e.email }}</td>
+        <td>{{ e.role }}</td>
+        <td>{{ e.salary }}</td>
+        <td>
+          <a class="btn btn-sm btn-primary"
+             href="{{ url_for('supervisor.employee_edit', emp_id=e.emp_id) }}">
+             Edit
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <!-- No data -->
+  <div class="alert alert-info">No employees found.</div>
+  {% endif %}
+
+</div>
+
+{% endblock %}

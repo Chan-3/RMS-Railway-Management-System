@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3>My Profile</h3>
+<hr>
+
+<form method="post" class="col-md-6">
+
+  <!-- Name (readonly) -->
+  <div class="mb-2">
+    <label>Name</label>
+    <input class="form-control" value="{{ p.first_name }} {{ p.last_name }}" disabled>
+  </div>
+
+  <!-- Email (readonly) -->
+  <div class="mb-2">
+    <label>Email</label>
+    <input class="form-control" value="{{ p.email }}" disabled>
+  </div>
+
+  <div class="mb-2">
+    <label>Phone</label>
+    <input name="phone" class="form-control" value="{{ p.phone }}">
+  </div>
+
+  <div class="mb-2">
+    <label>Gender</label>
+    <select name="gender" class="form-select">
+      <option value="MALE"   {% if p.gender=='MALE' %}selected{% endif %}>Male</option>
+      <option value="FEMALE" {% if p.gender=='FEMALE' %}selected{% endif %}>Female</option>
+      <option value="OTHER"  {% if p.gender=='OTHER' %}selected{% endif %}>Other</option>
+    </select>
+  </div>
+
+  <div class="mb-2">
+    <label>Age</label>
+    <input name="age" class="form-control" value="{{ p.age }}">
+  </div>
+
+  <button class="btn btn-primary mt-3">Save</button>
+  <a href="/passenger/dashboard" class="btn btn-secondary mt-3 ms-2">Back</a>
+
+</form>
+
+{% endblock %}

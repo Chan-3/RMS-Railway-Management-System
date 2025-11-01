@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4 col-lg-7">
+
+  <!-- Page Title -->
+  <h2 class="fw-bold text-center mb-2">Create Employee</h2>
+  <p class="text-muted text-center">
+    Add new employee details. Temporary password will be assigned automatically.
+  </p>
+
+  <hr>
+
+  <!-- Form -->
+  <form method="post" class="mt-4">
+
+    <!-- Name -->
+    <div class="row g-3 mb-2">
+      <div class="col-md-6">
+        <label class="form-label">First Name</label>
+        <input name="first_name" class="form-control" required>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Last Name</label>
+        <input name="last_name" class="form-control" required>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input name="email" type="email" class="form-control" required>
+    </div>
+
+    <!-- Role + Salary -->
+    <div class="row g-3 mb-2">
+      <div class="col-md-6">
+        <label class="form-label">Role</label>
+        <select name="role" class="form-select" required>
+          <option value="SUPERVISOR">SUPERVISOR</option>
+          <option value="EMPLOYEE">EMPLOYEE</option>
+
+          <!-- Expanded roles -->
+          <option value="CLERK">CLERK</option>
+          <option value="DRIVER">DRIVER</option>
+          <option value="GUARD">GUARD</option>
+          <option value="TICKET_EXAMINER">TICKET EXAMINER</option>
+          <option value="PORTER">PORTER</option>
+          <option value="CLEANING_STAFF">CLEANING STAFF</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Salary</label>
+        <input name="salary" type="number" class="form-control" value="30000">
+      </div>
+    </div>
+
+    <!-- Supervisor -->
+    <div class="mb-3">
+      <label class="form-label">Supervisor (optional)</label>
+      <select name="supervisor_id" class="form-select">
+        <option value="">-- None --</option>
+        {% for s in supervisors %}
+        <option value="{{ s.emp_id }}">
+          {{ s.first_name }} {{ s.last_name }} (ID: {{ s.emp_id }})
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Info -->
+    <p class="small text-muted">
+      Temporary password will be set automatically.  
+      Employee can change password after logging in.
+    </p>
+
+    <!-- Buttons -->
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn btn-success">✅ Create Employee</button>
+      <a href="{{ url_for('admin.employees') }}" class="btn btn-secondary">← Back</a>
+    </div>
+
+  </form>
+</div>
+
+{% endblock %}

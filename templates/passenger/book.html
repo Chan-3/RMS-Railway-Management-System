@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Page Title -->
+<h3>Book Ticket</h3>
+
+<!-- Booking Form -->
+<form method="post" class="col-md-6 row g-3">
+
+  <!-- Train ID (pre-filled from search result) -->
+  <div class="col-6">
+    <label>Train ID</label>
+    <input name="train_id" class="form-control" required value="{{ request.args.train_id }}">
+  </div>
+
+  <!-- Route ID (pre-filled from search result) -->
+  <div class="col-6">
+    <label>Route ID</label>
+    <input name="route_id" class="form-control" required value="{{ request.args.route_id }}">
+  </div>
+
+  <!-- Travel Date -->
+  <div class="col-6">
+    <label>Travel Date</label>
+    <input type="date" name="travel_date" class="form-control" required>
+  </div>
+
+  <!-- Seat Type (auto-selected if passed via URL) -->
+  <div class="col-6">
+    <label>Seat Type</label>
+    <select name="seat_type" class="form-select">
+        <option value="GENERAL" {% if request.args.seat_type=='GENERAL' %}selected{% endif %}>GENERAL</option>
+        <option value="SLEEPER" {% if request.args.seat_type=='SLEEPER' %}selected{% endif %}>SLEEPER</option>
+        <option value="AC" {% if request.args.seat_type=='AC' %}selected{% endif %}>AC</option>
+    </select>
+  </div>
+
+  <!-- Passenger count -->
+  <div class="col-6">
+    <label>Passenger Count</label>
+    <input name="count" type="number" min="1" value="1" class="form-control">
+  </div>
+
+  <!-- Payment -->
+  <div class="col-6">
+    <label>Payment Mode</label>
+    <select name="payment_mode" class="form-select">
+      <option>UPI</option>
+      <option>CASH</option>
+    </select>
+  </div>
+
+  <!-- Submit -->
+  <div class="col-12">
+    <button class="btn btn-success">Book Ticket</button>
+  </div>
+</form>
+
+
+<!-- Display booking response -->
+{% if result %}
+<br>
+
+  {% if result.ok %}
+  <div class="alert alert-success">
+    <strong>Booking Successful!</strong><br>
+    Booking ID: {{result.data.booking_id}} <br>
+    PNR: {{result.data.pnr}} <br>
+    Fare: ₹{{result.data.total_fare}}
+  </div>
+
+  {% else %}
+  <div class="alert alert-danger">
+    {{result.error}}
+  </div>
+  {% endif %}
+
+{% endif %}
+
+<!-- Back -->
+<a href="/passenger/dashboard" class="btn btn-link">← Dashboard</a>
+
+{% endblock %}

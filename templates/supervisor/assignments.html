@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Page container -->
+<div class="container mt-4">
+  <h2>Assignments</h2>
+  <hr>
+
+  <!-- Employee selector -->
+  <form class="row g-2 mb-3" method="get">
+    <div class="col-md-4">
+      <label class="form-label">Employee</label>
+      <select name="emp_id" class="form-select" onchange="this.form.submit()">
+        <option value="">-- Select --</option>
+        {% for e in employees %}
+          <option value="{{ e.emp_id }}" {% if sel_emp_id==e.emp_id %}selected{% endif %}>
+            {{ e.first_name }} {{ e.last_name }} ({{ e.emp_id }})
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  </form>
+
+  {% if sel_emp_id %}
+  <!-- Assign new train -->
+  <form method="post" class="row g-2 mb-3">
+    <input type="hidden" name="emp_id" value="{{ sel_emp_id }}">
+    <div class="col-md-4">
+      <label class="form-label">Train</label>
+      <select name="train_id" class="form-select">
+        {% for t in trains_tr %}
+          <option value="{{ t.train_id }}">{{ t.name }} ({{ t.train_id }})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+      <button class="btn btn-primary">Assign</button>
+    </div>
+  </form>
+
+  <h5>Current Assignments</h5>
+
+  {% if rows %}
+  <!-- table wrapper -->
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Train</th>
+          <th>Assigned At</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td>{{ r.train_name }} ({{ r.train_id }})</td>
+          <td>{{ r.assigned_at }}</td>
+          <td>
+            <form method="post" action="{{ url_for('supervisor.assignments_remove') }}">
+              <input type="hidden" name="emp_id" value="{{ sel_emp_id }}">
+              <input type="hidden" name="train_id" value="{{ r.train_id }}">
+              <button class="btn btn-sm btn-danger">Remove</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="alert alert-info">No assignments.</div>
+  {% endif %}
+
+  {% else %}
+    <!-- If no employee selected -->
+    <div class="alert alert-warning">Select an employee to manage assignments.</div>
+  {% endif %}
+
+  <a href="{{ url_for('supervisor.dashboard') }}" class="btn btn-secondary mt-3">← Back</a>
+</div>
+{% endblock %}

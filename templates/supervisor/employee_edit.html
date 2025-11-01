@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Page container -->
+<div class="container mt-4">
+
+  <h2>Edit Employee</h2>
+  <hr>
+
+  <!-- Edit form -->
+  <form method="post" class="col-md-6">
+
+    <!-- Name (read-only) -->
+    <div class="mb-2">
+      <label>Name</label>
+      <input class="form-control" value="{{ emp.first_name }} {{ emp.last_name }}" disabled>
+    </div>
+
+    <!-- Email (read-only) -->
+    <div class="mb-2">
+      <label>Email</label>
+      <input class="form-control" value="{{ emp.email }}" disabled>
+    </div>
+
+    <!-- Role -->
+    <div class="mb-2">
+      <label>Role</label>
+      <select name="role" class="form-select">
+        {% for r in roles %}
+          <option value="{{ r }}" {% if emp.role == r %}selected{% endif %}>{{ r }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Salary -->
+    <div class="mb-2">
+      <label>Salary</label>
+      <input name="salary" type="number" class="form-control" value="{{ emp.salary }}">
+    </div>
+
+    <!-- Info text -->
+    <div class="form-text">
+      Supervisor stays you by default (cannot be changed here).
+    </div>
+
+    <!-- Actions -->
+    <button class="btn btn-success mt-2">Save</button>
+    <a href="{{ url_for('supervisor.employees_list') }}" class="btn btn-secondary ms-2 mt-2">Back</a>
+
+  </form>
+
+</div>
+
+{% endblock %}

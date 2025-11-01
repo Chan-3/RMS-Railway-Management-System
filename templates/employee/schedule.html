@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Page title -->
+  <h2 class="fw-bold">My Schedule</h2>
+  <hr>
+
+  <!-- Date range filter -->
+  <form class="row g-2 mb-3" method="get">
+    <div class="col-auto">
+      <label class="form-label">From</label>
+      <input type="date" name="from" class="form-control" value="{{ date_from }}">
+    </div>
+
+    <div class="col-auto">
+      <label class="form-label">To</label>
+      <input type="date" name="to" class="form-control" value="{{ date_to }}">
+    </div>
+
+    <div class="col-auto d-flex align-items-end">
+      <button class="btn btn-primary">Filter</button>
+    </div>
+  </form>
+
+  {% if rows and rows|length > 0 %}
+  <!-- Schedule table -->
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Date</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Train</th>
+        <th>Role</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for s in rows %}
+      <tr>
+        <td>{{ s.shift_date }}</td>
+        <td>{{ s.start_time }}</td>
+        <td>{{ s.end_time }}</td>
+        <td>
+          {% if s.train_id %}
+            {{ s.train_name }} ({{ s.train_id }})
+          {% else %}
+            —
+          {% endif %}
+        </td>
+        <td>{{ s.role_on_shift or '—' }}</td>
+        <td>{{ s.notes or '—' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <!-- Empty state -->
+  <div class="alert alert-warning">
+    No schedules found for selected range.
+  </div>
+  {% endif %}
+
+  <!-- Back -->
+  <a href="{{ url_for('employee.dashboard') }}" class="btn btn-secondary mt-3">
+    ← Back
+  </a>
+
+</div>
+
+{% endblock %}

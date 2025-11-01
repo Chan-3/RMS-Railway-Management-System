@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Page Heading -->
+  <h2 class="fw-bold mb-3">Report to Supervisor</h2>
+  <hr>
+
+  <!-- Report Form -->
+  <form method="post" class="col-lg-6 col-md-8 col-12">
+
+    <div class="mb-3">
+      <label class="form-label">Subject</label>
+      <input type="text" name="subject" class="form-control" required maxlength="120">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Message</label>
+      <textarea name="message" class="form-control" rows="5" required></textarea>
+    </div>
+
+    <!-- Actions -->
+    <button class="btn btn-primary">Submit Report</button>
+    <a href="{{ url_for('employee.dashboard') }}" class="btn btn-secondary ms-2">Cancel</a>
+
+  </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <h2 class="fw-bold">Bookings Report</h2>
+  <p class="text-muted">Review bookings filtered by date range and train.</p>
+  <hr>
+
+  <!-- ✅ Filter form -->
+  <form class="row g-3 mb-4" method="get">
+
+    <div class="col-md-3">
+      <label class="form-label fw-semibold">From</label>
+      <input type="date" name="from" value="{{ date_from }}" class="form-control">
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label fw-semibold">To</label>
+      <input type="date" name="to" value="{{ date_to }}" class="form-control">
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label fw-semibold">Train</label>
+      <select name="train_id" class="form-select">
+        <option value="">-- All --</option>
+        {% for t in trains %}
+        <option value="{{ t.train_id }}" {% if sel_train == t.train_id %}selected{% endif %}>
+          {{ t.train_name }} ({{ t.train_id }})
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2 d-flex align-items-end">
+      <button class="btn btn-primary w-100">
+        Apply
+      </button>
+    </div>
+
+  </form>
+
+  <!-- ✅ Table section -->
+  {% if rows and rows|length > 0 %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>PNR</th>
+          <th>Train</th>
+          <th>Passenger</th>
+          <th>Date</th>
+          <th>Seat Type</th>
+          <th>Count</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for b in rows %}
+        <tr>
+          <td>{{ b.booking_id }}</td>
+          <td class="fw-semibold">{{ b.pnr }}</td>
+          <td>{{ b.train_name }}</td>
+          <td>{{ b.first_name }} {{ b.last_name }}</td>
+          <td>{{ b.travel_date }}</td>
+          <td>{{ b.seat_type }}</td>
+          <td>{{ b.passenger_count }}</td>
+          <td>
+            {% if b.status == "CONFIRMED" %}
+              <span class="badge bg-success">{{ b.status }}</span>
+            {% elif b.status == "CANCELLED" %}
+              <span class="badge bg-danger">{{ b.status }}</span>
+            {% else %}
+              <span class="badge bg-secondary">{{ b.status }}</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </div>
+
+  {% else %}
+    <div class="alert alert-info text-center">
+      No data found for selected filters.
+    </div>
+  {% endif %}
+
+  <a href="{{ url_for('admin.reports_home') }}" class="btn btn-secondary mt-3">
+    ← Back
+  </a>
+
+</div>
+
+{% endblock %}

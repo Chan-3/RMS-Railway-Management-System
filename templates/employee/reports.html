@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Page Title -->
+  <h2 class="fw-bold">My Reports</h2>
+  <hr>
+
+  <!-- Create new report -->
+  <a href="{{ url_for('employee.report_supervisor') }}" class="btn btn-success mb-3">
+    + New Report
+  </a>
+
+  {% if rows and rows|length > 0 %}
+  <!-- Reports Table -->
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Subject</th>
+        <th>Status</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r.report_id }}</td>
+        <td>{{ r.subject }}</td>
+        <td>{{ r.status }}</td>
+        <td>{{ r.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <!-- No data -->
+  <div class="alert alert-info">
+    No reports submitted yet.
+  </div>
+  {% endif %}
+
+  <!-- Back button -->
+  <a href="{{ url_for('employee.dashboard') }}" class="btn btn-secondary mt-3">
+    ← Back
+  </a>
+
+</div>
+
+{% endblock %}

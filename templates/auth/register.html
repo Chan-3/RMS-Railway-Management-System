@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<h3>Register</h3>
+<form method="post" class="col-6">
+  <input name="first_name" class="form-control mb-2" placeholder="First Name" required>
+  <input name="last_name" class="form-control mb-2" placeholder="Last Name" required>
+  <input name="email" type="email" class="form-control mb-2" placeholder="Email" required>
+  <input name="phone" class="form-control mb-2" placeholder="Phone" required>
+  <select name="gender" class="form-control mb-2" required>
+    <option>MALE</option><option>FEMALE</option><option>OTHER</option>
+  </select>
+  <input name="age" type="number" class="form-control mb-2" placeholder="Age" required>
+  <input name="password" type="password" class="form-control mb-2" placeholder="Password" required>
+  <button class="btn btn-primary">Register</button>
+</form>
+{% endblock %}

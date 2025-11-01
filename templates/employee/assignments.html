@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- ✅ My Train Assignments Page -->
+<div class="container py-4">
+
+  <!-- Page Title -->
+  <h2 class="fw-bold">My Train Assignments</h2>
+  <hr>
+
+  {% if rows and rows|length > 0 %}
+
+  <!-- ✅ Responsive table wrapper -->
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+
+      <!-- Table Header -->
+      <thead class="table-light">
+        <tr>
+          <th>Train</th>
+          <th>Assigned By</th>
+          <th>Assigned At</th>
+        </tr>
+      </thead>
+
+      <!-- Table Body -->
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td>{{ r.train_name }} (ID: {{ r.train_id }})</td>
+          <td>{{ (r.assigned_by_first or '') ~ ' ' ~ (r.assigned_by_last or '') }}</td>
+          <td>{{ r.assigned_at }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </div>
+
+  {% else %}
+    <!-- Empty State -->
+    <div class="alert alert-warning">No assignments found.</div>
+  {% endif %}
+
+  <!-- Back Button -->
+  <a href="{{ url_for('employee.dashboard') }}" class="btn btn-secondary mt-3">
+    ← Back
+  </a>
+
+</div>
+
+{% endblock %}

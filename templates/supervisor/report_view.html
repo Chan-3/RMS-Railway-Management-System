@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Page container -->
+<div class="container mt-4">
+
+  <h2>Report #{{ r.report_id }}</h2>
+  <hr>
+
+  <!-- Sender -->
+  <div class="mb-3">
+    <strong>From:</strong>
+    {{ r.emp_first }} {{ r.emp_last }} (Emp ID: {{ r.emp_id }})
+  </div>
+
+  <!-- Supervisor -->
+  <div class="mb-3">
+    <strong>To:</strong>
+    {{ r.sup_first }} {{ r.sup_last }} (Supervisor ID: {{ r.supervisor_id }})
+  </div>
+
+  <!-- Subject -->
+  <div class="mb-3">
+    <strong>Subject:</strong> {{ r.subject }}
+  </div>
+
+  <!-- Message body -->
+  <div class="mb-3">
+    <strong>Message:</strong>
+    <pre class="m-0">{{ r.message }}</pre>
+  </div>
+
+  <!-- Status & Time -->
+  <div class="mb-3">
+    <strong>Status:</strong> {{ r.status }} &nbsp; | &nbsp;
+    <strong>Created:</strong> {{ r.created_at }}
+  </div>
+
+  <!-- Update status -->
+  <form method="post"
+        action="{{ url_for('supervisor.report_set_status', report_id=r.report_id) }}"
+        class="d-flex">
+
+    <select name="status" class="form-select w-auto me-2">
+      <option value="NEW"      {% if r.status=='NEW' %}selected{% endif %}>NEW</option>
+      <option value="SEEN"     {% if r.status=='SEEN' %}selected{% endif %}>SEEN</option>
+      <option value="RESOLVED" {% if r.status=='RESOLVED' %}selected{% endif %}>RESOLVED</option>
+    </select>
+
+    <button class="btn btn-primary">Update</button>
+
+    <a href="{{ url_for('supervisor.reports_inbox') }}"
+       class="btn btn-secondary ms-2">Back</a>
+  </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4 col-lg-7">
+
+  <!-- Page Title -->
+  <h2 class="fw-bold text-center mb-2">Edit Employee</h2>
+  <p class="text-muted text-center">
+    Update employee role, salary, supervisor, and status.
+  </p>
+
+  <hr>
+
+  <form method="post" class="mt-3">
+
+    <!-- Name + Email (disabled) -->
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Name</label>
+        <input class="form-control" value="{{ emp.first_name }} {{ emp.last_name }}" disabled>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input class="form-control" value="{{ emp.email }}" disabled>
+      </div>
+    </div>
+
+    <!-- Role + Salary -->
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Role</label>
+        <select name="role" class="form-select">
+          <option value="SUPERVISOR"      {% if emp.role=='SUPERVISOR' %}selected{% endif %}>SUPERVISOR</option>
+          <option value="EMPLOYEE"        {% if emp.role=='EMPLOYEE' %}selected{% endif %}>EMPLOYEE</option>
+          <option value="CLERK"           {% if emp.role=='CLERK' %}selected{% endif %}>CLERK</option>
+          <option value="DRIVER"          {% if emp.role=='DRIVER' %}selected{% endif %}>DRIVER</option>
+          <option value="GUARD"           {% if emp.role=='GUARD' %}selected{% endif %}>GUARD</option>
+          <option value="TICKET_EXAMINER" {% if emp.role=='TICKET_EXAMINER' %}selected{% endif %}>TICKET EXAMINER</option>
+          <option value="PORTER"          {% if emp.role=='PORTER' %}selected{% endif %}>PORTER</option>
+          <option value="CLEANING_STAFF"  {% if emp.role=='CLEANING_STAFF' %}selected{% endif %}>CLEANING STAFF</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Salary</label>
+        <input name="salary" type="number" class="form-control" value="{{ emp.salary }}">
+      </div>
+    </div>
+
+    <!-- Supervisor -->
+    <div class="mb-3">
+      <label class="form-label">Supervisor</label>
+      <select name="supervisor_id" class="form-select">
+        <option value="">-- None --</option>
+        {% for s in supervisors %}
+        <option value="{{ s.emp_id }}" {% if emp.supervisor_id==s.emp_id %}selected{% endif %}>
+          {{ s.first_name }} {{ s.last_name }} (ID: {{ s.emp_id }})
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Active -->
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" name="active" id="activeCheck"
+             {% if emp.active|default(1)==1 %}checked{% endif %}>
+      <label class="form-check-label" for="activeCheck">Active</label>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn btn-primary">💾 Save Changes</button>
+      <a href="{{ url_for('admin.employees') }}" class="btn btn-secondary">← Back</a>
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}

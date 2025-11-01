@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center">
+    <h2 class="fw-bold">Employees</h2>
+    <a href="{{ url_for('admin.employee_create') }}" class="btn btn-success">
+      + Create Employee
+    </a>
+  </div>
+
+  <p class="text-muted">Manage user roles, salaries, and supervisory structure.</p>
+  <hr>
+
+  <!-- Search -->
+  <form class="d-flex mb-3" method="get">
+    <input class="form-control me-2"
+           type="search"
+           name="q"
+           placeholder="Search name or email"
+           value="{{ q }}">
+    <button class="btn btn-primary">Search</button>
+  </form>
+
+  <!-- Table -->
+  {% if rows %}
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr class="text-center">
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Salary</th>
+          <th>Supervisor</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for e in rows %}
+        <tr>
+          <td class="text-center">{{ e.emp_id }}</td>
+
+          <td>{{ e.first_name }} {{ e.last_name }}</td>
+
+          <td>{{ e.email }}</td>
+
+          <td class="text-center">{{ e.role }}</td>
+
+          <td class="text-center">₹ {{ e.salary }}</td>
+
+          <!-- Supervisor Display -->
+          <td class="text-center">
+            {% if e.supervisor_id %}
+                {% set sup = supervisors_map.get(e.supervisor_id) %}
+                {% if sup %}
+                    {{ sup }} (ID: {{ e.supervisor_id }})
+                {% else %}
+                    (ID: {{ e.supervisor_id }})
+                {% endif %}
+            {% else %}
+                —
+            {% endif %}
+
+          </td>
+
+          <!-- Actions -->
+          <td class="text-center">
+            <a class="btn btn-sm btn-primary"
+               href="{{ url_for('admin.employee_edit', emp_id=e.emp_id) }}">
+              Edit
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </div>
+
+  {% else %}
+    <div class="alert alert-info text-center">No employees found.</div>
+  {% endif %}
+
+  <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary mt-3">
+    ← Back
+  </a>
+
+</div>
+
+{% endblock %}

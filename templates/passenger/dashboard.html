@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Page Container -->
+<div class="container mt-4">
+
+  <!-- Page Title -->
+  <h2>Passenger Dashboard</h2>
+  <hr>
+
+  <!-- Quick Actions -->
+  <div class="mb-3 d-flex flex-wrap gap-2">
+    <a href="/passenger/profile" class="btn btn-info btn-sm">My Profile</a>
+    <a href="{{ url_for('passenger.search') }}" class="btn btn-primary btn-sm">Search Trains</a>
+    <a href="{{ url_for('passenger.book') }}" class="btn btn-secondary btn-sm">Book Ticket</a>
+    <a href="{{ url_for('passenger.cancel') }}" class="btn btn-danger btn-sm">Cancel Ticket</a>
+    <a href="{{ url_for('passenger.history') }}" class="btn btn-dark btn-sm">Booking History</a>
+  </div>
+
+  <!-- Logged-in Details -->
+  <p class="text-muted">Logged in as Passenger #{{ current_user_id }}</p>
+
+</div>
+{% endblock %}

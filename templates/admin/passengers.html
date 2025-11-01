@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center">
+    <h2 class="fw-bold">Passengers</h2>
+  </div>
+
+  <p class="text-muted">Search, activate, deactivate, or delete passengers.</p>
+  <hr>
+
+  <!-- Search -->
+  <form class="d-flex mb-3" method="get">
+    <input class="form-control me-2"
+           type="search"
+           name="q"
+           placeholder="Search name or email"
+           value="{{ q }}">
+    <button class="btn btn-primary">Search</button>
+  </form>
+
+  {% if rows %}
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle text-center">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for p in rows %}
+        <tr>
+          <td>{{ p.passenger_id }}</td>
+
+          <td>{{ p.first_name }} {{ p.last_name }}</td>
+
+          <td>{{ p.email }}</td>
+
+          <td>
+            {% if p.active|int == 1 %}
+              <span class="badge bg-success">Active</span>
+            {% else %}
+              <span class="badge bg-secondary">Inactive</span>
+            {% endif %}
+          </td>
+
+
+          <td>
+            <div class="d-flex gap-2 justify-content-center">
+
+              <!-- Activate -->
+              <form method="post" action="{{ url_for('admin.passenger_toggle') }}">
+                <input type="hidden" name="passenger_id" value="{{ p.passenger_id }}">
+                <input type="hidden" name="active" value="1">
+                <button class="btn btn-sm btn-outline-success">Activate</button>
+              </form>
+
+              <!-- Deactivate -->
+              <form method="post" action="{{ url_for('admin.passenger_toggle') }}">
+                <input type="hidden" name="passenger_id" value="{{ p.passenger_id }}">
+                <input type="hidden" name="active" value="0">
+                <button class="btn btn-sm btn-outline-warning">Deactivate</button>
+              </form>
+
+              <!-- Delete -->
+              <form method="post"
+                    action="{{ url_for('admin.passenger_delete') }}"
+                    onsubmit="return confirm('Are you sure you want to delete this passenger?');">
+                <input type="hidden" name="passenger_id" value="{{ p.passenger_id }}">
+                <button class="btn btn-sm btn-danger">Delete</button>
+              </form>
+
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </div>
+
+  {% else %}
+    <div class="alert alert-info text-center">
+      No passengers found.
+    </div>
+  {% endif %}
+
+  <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary mt-3">
+    ← Back
+  </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container py-4">
+  
+  {% if error %}
+  <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+
+  {% if success %}
+  <div class="alert alert-success">{{ success }}</div>
+  {% endif %}
+
+
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="fw-bold">🚆 Manage Trains</h2>
+    <a href="{{ url_for('admin.train_create') }}" class="btn btn-success">
+      + Create Train
+    </a>
+  </div>
+
+  <hr>
+
+  {% if rows %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Train Name</th>
+          <th>Route</th>
+          <th>Status</th>
+          <th style="width: 150px">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for t in rows %}
+        <tr>
+          <td>{{ t.train_id }}</td>
+          <td>{{ t.train_name }}</td>
+
+          <td>
+            {% if t.route_id %}
+              {{ t.source }} → {{ t.destination }}
+              <span class="text-muted">(Route #{{ t.route_id }})</span>
+            {% else %}
+              <span class="text-muted">No Route Assigned</span>
+            {% endif %}
+          </td>
+
+          <td>
+            {% if t.status == "ON-TIME" %}
+              <span class="badge text-bg-success">ON-TIME</span>
+            {% elif t.status == "DELAYED" %}
+              <span class="badge text-bg-warning">DELAYED</span>
+            {% else %}
+              <span class="badge text-bg-danger">CANCELLED</span>
+            {% endif %}
+          </td>
+
+          <td class="d-flex gap-2">
+            <!-- Edit -->
+            <a class="btn btn-sm btn-primary"
+               href="{{ url_for('admin.train_edit', train_id=t.train_id) }}">
+              Edit
+            </a>
+
+            <!-- Delete -->
+            <form method="post"
+                  action="{{ url_for('admin.train_delete', train_id=t.train_id) }}"
+                  onsubmit="return confirm('Delete this train?');">
+              <input type="hidden" name="train_id" value="{{ t.train_id }}">
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </div>
+
+  {% else %}
+  <div class="alert alert-info">No trains found.</div>
+  {% endif %}
+
+  <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary mt-3">
+    ← Back
+  </a>
+</div>
+{% endblock %}

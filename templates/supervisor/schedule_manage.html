@@ -1,0 +1,176 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Page container -->
+<div class="container mt-4">
+
+  <h2>Schedule</h2>
+  <hr>
+
+  <!-- Filter section -->
+  <form class="row g-2 mb-3" method="get">
+
+    <!-- Select employee -->
+    <div class="col-md-3">
+      <label>Employee</label>
+      <select name="emp_id" class="form-select" onchange="this.form.submit()">
+        <option value="">-- Select --</option>
+        {% for e in employees %}
+        <option value="{{ e.emp_id }}" {% if sel_emp_id==e.emp_id %}selected{% endif %}>
+          {{ e.first_name }} {{ e.last_name }} ({{ e.emp_id }})
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Date range: From -->
+    <div class="col-md-3">
+      <label>From</label>
+      <input type="date" name="from"
+             value="{{ date_from }}"
+             class="form-control">
+    </div>
+
+    <!-- Date range: To -->
+    <div class="col-md-3">
+      <label>To</label>
+      <input type="date" name="to"
+             value="{{ date_to }}"
+             class="form-control">
+    </div>
+
+    <!-- Apply filter -->
+    <div class="col-md-2 d-flex align-items-end">
+      <button class="btn btn-primary">Filter</button>
+    </div>
+
+  </form>
+
+
+  <!-- Employee selected → allow creating shifts -->
+  {% if sel_emp_id %}
+
+  <!-- Add shift form -->
+  <form method="post" class="row g-2 mb-4">
+
+    <input type="hidden" name="emp_id" value="{{ sel_emp_id }}">
+
+    <div class="col-md-2">
+      <label>Date</label>
+      <input type="date" name="shift_date"
+             class="form-control" required>
+    </div>
+
+    <div class="col-md-2">
+      <label>Start</label>
+      <input type="time" name="start_time"
+             class="form-control" required>
+    </div>
+
+    <div class="col-md-2">
+      <label>End</label>
+      <input type="time" name="end_time"
+             class="form-control" required>
+    </div>
+
+    <div class="col-md-3">
+      <label>Train (optional)</label>
+      <select name="train_id" class="form-select">
+        <option value="">-- None --</option>
+        {% for t in trains %}
+        <option value="{{ t.train_id }}">{{ t.name }} ({{ t.train_id }})</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <label>Role on Shift</label>
+      <input name="role_on_shift" class="form-control"
+             placeholder="Guard / Ticketing">
+    </div>
+
+    <div class="col-md-12 mt-2">
+      <input name="notes" class="form-control"
+             placeholder="Notes (optional)">
+    </div>
+
+    <div class="col-md-2 mt-2">
+      <button class="btn btn-success">Add Shift</button>
+    </div>
+
+  </form>
+
+
+  <!-- Shifts table -->
+  <h5>Shifts</h5>
+
+  {% if rows %}
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Date</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Train</th>
+        <th>Role</th>
+        <th>Notes</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for s in rows %}
+      <tr>
+        <td>{{ s.shift_date }}</td>
+        <td>{{ s.start_time }}</td>
+        <td>{{ s.end_time }}</td>
+
+        <!-- Train info -->
+        <td>
+          {% if s.train_id %}
+            {{ s.train_name }} ({{ s.train_id }})
+          {% else %}
+            —
+          {% endif %}
+        </td>
+
+        <td>{{ s.role_on_shift or '—' }}</td>
+        <td>{{ s.notes or '—' }}</td>
+
+        <!-- Delete shift -->
+        <td>
+          <form method="post"
+                action="{{ url_for('supervisor.schedule_delete') }}">
+            <input type="hidden" name="shift_id" value="{{ s.shift_id }}">
+            <input type="hidden" name="emp_id" value="{{ sel_emp_id }}">
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+
+  {% else %}
+    <div class="alert alert-info">No shifts found.</div>
+  {% endif %}
+
+  {% else %}
+    <!-- No employee selected -->
+    <div class="alert alert-warning">
+      Select an employee to manage schedule.
+    </div>
+  {% endif %}
+
+
+  <!-- Back button -->
+  <a href="{{ url_for('supervisor.dashboard') }}"
+     class="btn btn-secondary mt-3">
+     ← Back
+  </a>
+
+</div>
+
+{% endblock %}

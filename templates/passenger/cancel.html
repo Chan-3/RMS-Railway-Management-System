@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Page Container -->
+<div class="container mt-4">
+
+  <!-- Page Title -->
+  <h2>Cancel Booking</h2>
+  <hr>
+
+  <!-- Cancel Booking Form -->
+  <form method="post" class="row g-3 col-lg-6">
+    <div class="col-md-6">
+      <label class="form-label">Booking ID</label>
+      <input name="booking_id" class="form-control" required>
+    </div>
+
+    <div class="col-12">
+      <button class="btn btn-danger">Cancel Booking</button>
+      <a href="{{ url_for('passenger.dashboard') }}" class="btn btn-secondary ms-2">Back</a>
+    </div>
+  </form>
+
+  <!-- Result Display -->
+  {% if result %}
+<div class="mt-4">
+
+  {% if result.ok %}
+  <div class="alert alert-success">
+    <strong>Cancellation Done</strong><br>
+
+    {% if result.refund_amount %}
+      <span>Refund Amount: ₹{{ result.refund_amount }}</span><br>
+    {% endif %}
+
+    {% if result.refund_percent %}
+      <span>Refund Percent: {{ result.refund_percent }}%</span>
+    {% endif %}
+  </div>
+  {% else %}
+    <div class="alert alert-danger">{{ result.error }}</div>
+  {% endif %}
+
+</div>
+{% endif %}
+
+
+</div>
+{% endblock %}

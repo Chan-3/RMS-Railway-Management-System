@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Page header -->
+  <h2 class="fw-bold">All Trains</h2>
+  <hr>
+
+  {% if trains %}
+  <!-- Train list table -->
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Train ID</th>
+        <th>Name</th>
+        <th>Route</th>
+        <th>Distance (km)</th>
+        <th>Duration</th>
+        <th>Status</th>
+        <th>Manage</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for t in trains %}
+      <tr>
+        <td>{{ t.train_id }}</td>
+        <td>{{ t.train_name }}</td>
+        <td>{{ t.source }} → {{ t.destination }}</td>
+        <td>{{ t.distance_km }}</td>
+        <td>{{ t.duration }}</td>
+
+        <!-- Status badge -->
+        <td>
+          {% set st = t.status %}
+          {% if st == 'ON-TIME' %}
+            <span class="badge text-bg-success">ON-TIME</span>
+          {% elif st == 'DELAYED' %}
+            <span class="badge text-bg-warning">DELAYED</span>
+          {% elif st == 'CANCELLED' %}
+            <span class="badge text-bg-danger">CANCELLED</span>
+          {% else %}
+            <span class="badge text-bg-secondary">{{ st }}</span>
+          {% endif %}
+        </td>
+
+        <!-- Update train -->
+        <td>
+          <a class="btn btn-primary btn-sm"
+             href="{{ url_for('employee.update_train', train_id=t.train_id) }}">
+            Update
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+    <!-- Empty state -->
+    <div class="alert alert-warning">No trains found.</div>
+  {% endif %}
+
+  <!-- Back -->
+  <a href="{{ url_for('employee.dashboard') }}" class="btn btn-secondary mt-3">
+    ← Back
+  </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,5 @@
+source C:\Users\Chandu\OneDrive\Desktop\V_SEM\DBMS\MiniProject\final\rms\database\schema.sql
+source C:\Users\Chandu\OneDrive\Desktop\V_SEM\DBMS\MiniProject\final\rms\database\seed_data.sql
+source C:\Users\Chandu\OneDrive\Desktop\V_SEM\DBMS\MiniProject\final\rms\database\functions.sql
+source C:\Users\Chandu\OneDrive\Desktop\V_SEM\DBMS\MiniProject\final\rms\database\procedures.sql
+source C:\Users\Chandu\OneDrive\Desktop\V_SEM\DBMS\MiniProject\final\rms\database\triggers.sql

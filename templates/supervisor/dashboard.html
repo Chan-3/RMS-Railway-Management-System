@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Page container -->
+<div class="container mt-4">
+
+  <h2>Supervisor Dashboard</h2>
+  <hr>
+
+  <!-- Dashboard modules -->
+  <div class="row">
+
+    <!-- Employees -->
+    <div class="col-md-4 mb-3">
+      <a href="{{ url_for('supervisor.employees_list') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+            <h5 class="card-title">👥 Employees</h5>
+            <p class="card-text text-muted">View / edit employees.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Assignments -->
+    <div class="col-md-4 mb-3">
+      <a href="{{ url_for('supervisor.assignments') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+            <h5 class="card-title">📌 Assignments</h5>
+            <p class="card-text text-muted">Assign staff to trains.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Schedule -->
+    <div class="col-md-4 mb-3">
+      <a href="{{ url_for('supervisor.schedule_manage') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+            <h5 class="card-title">🗓 Schedule</h5>
+            <p class="card-text text-muted">Create / update shifts.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Train Status -->
+    <div class="col-md-4 mb-3">
+      <a href="{{ url_for('supervisor.status_manage') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+            <h5 class="card-title">🚦 Train Status</h5>
+            <p class="card-text text-muted">Set ON-TIME / DELAYED / CANCELLED.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Bookings -->
+    <div class="col-md-4 mb-3">
+      <a href="{{ url_for('supervisor.bookings') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+            <h5 class="card-title">📚 Bookings</h5>
+            <p class="card-text text-muted">View bookings by train/date.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Reports Inbox -->
+    <div class="col-md-4 mb-3">
+      <a href="{{ url_for('supervisor.reports_inbox') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+            <h5 class="card-title">📝 Reports Inbox</h5>
+            <p class="card-text text-muted">View & resolve employee reports.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

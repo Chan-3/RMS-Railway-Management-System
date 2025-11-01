@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4 col-lg-6">
+
+  <h2 class="fw-bold mb-3">Create Station</h2>
+  <hr>
+
+  <form method="post" class="mt-3">
+
+    <!-- Station Name -->
+    <div class="mb-3">
+      <label class="form-label">Station Name</label>
+      <input name="station_name" class="form-control" placeholder="Enter station name" required>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn btn-success">✅ Create</button>
+      <a href="{{ url_for('admin.stations') }}" class="btn btn-secondary">← Back</a>
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}

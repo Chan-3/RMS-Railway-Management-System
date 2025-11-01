@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container py-4 col-lg-6">
+
+  <!-- Title -->
+  <h2 class="fw-bold">Edit Train #{{ t.train_id }}</h2>
+  <hr>
+
+  <form method="post" class="bg-white p-4 border rounded shadow-sm">
+
+    <!-- Train Name -->
+    <div class="mb-3">
+      <label class="form-label">Train Name</label>
+      <input name="name" class="form-control" value="{{ t.name }}" required>
+    </div>
+
+    <!-- Route -->
+    <div class="mb-3">
+      <label class="form-label">Route</label>
+      <select name="route_id" class="form-select">
+        {% for r in routes %}
+        <option value="{{ r.route_id }}" {% if r.route_id == t.route_id %}selected{% endif %}>
+          {{ r.source }} → {{ r.destination }} (ID: {{ r.route_id }})
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Status -->
+    <div class="mb-3">
+      <label class="form-label">Status</label>
+      <select name="status" class="form-select">
+        <option value="ON-TIME"   {% if t.status == 'ON-TIME' %}selected{% endif %}>ON-TIME</option>
+        <option value="DELAYED"   {% if t.status == 'DELAYED' %}selected{% endif %}>DELAYED</option>
+        <option value="CANCELLED" {% if t.status == 'CANCELLED' %}selected{% endif %}>CANCELLED</option>
+      </select>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn btn-primary px-4">💾 Save</button>
+      <a href="{{ url_for('admin.trains') }}" class="btn btn-secondary">← Back</a>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

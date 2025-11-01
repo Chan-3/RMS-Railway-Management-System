@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Page Title -->
+  <div class="text-center mb-4">
+    <h2 class="fw-bold">Admin Dashboard</h2>
+    <p class="text-muted">
+      Manage all backend operations of Railway Management System
+    </p>
+  </div>
+
+  <hr>
+
+  <!-- Cards -->
+  <div class="row g-4">
+
+    <!-- Trains -->
+    <div class="col-md-4">
+      <a href="{{ url_for('admin.trains') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">🚆 Manage Trains</h5>
+            <p class="text-muted small mb-0">Add / Edit / Delete trains</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Stations -->
+    <div class="col-md-4">
+      <a href="{{ url_for('admin.stations') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">🏷 Stations</h5>
+            <p class="text-muted small mb-0">Create and manage stations</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Routes -->
+    <div class="col-md-4">
+      <a href="{{ url_for('admin.routes') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">🧭 Routes</h5>
+            <p class="text-muted small mb-0">Link stations & define trip distance</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Passengers -->
+    <div class="col-md-4">
+      <a href="{{ url_for('admin.passengers') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">👤 Passengers</h5>
+            <p class="text-muted small mb-0">
+              View, search, deactivate or delete users
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Employees -->
+    <div class="col-md-4">
+      <a href="{{ url_for('admin.employees') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">👥 Employees</h5>
+            <p class="text-muted small mb-0">
+              Create / Edit / Assign supervisors
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Reports -->
+    <div class="col-md-4">
+      <a href="{{ url_for('admin.reports_home') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">📊 Reports</h5>
+            <p class="text-muted small mb-0">
+              View revenue / bookings / assignments
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

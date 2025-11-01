@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- ✅ Passenger bookings list page -->
+<div class="container py-4">
+
+  <!-- Page title -->
+  <h2 class="fw-bold">Passenger Bookings</h2>
+  <hr>
+
+  {% if bookings %}
+
+  <!-- ✅ Responsive table wrapper -->
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Booking ID</th>
+          <th>PNR</th>
+          <th>Passenger</th>
+          <th>Travel Date</th>
+          <th>Seat Type</th>
+          <th>People</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for b in bookings %}
+        <tr>
+          <td>{{ b.booking_id }}</td>
+          <td>{{ b.pnr }}</td>
+          <td>{{ b.first_name }} {{ b.last_name }}</td>
+          <td>{{ b.travel_date }}</td>
+          <td>{{ b.seat_type }}</td>
+          <td>{{ b.passenger_count }}</td>
+          <td>{{ b.status }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% else %}
+    <!-- Empty state -->
+    <div class="alert alert-warning">No bookings found for this train.</div>
+  {% endif %}
+
+  <!-- Back button -->
+  <a href="{{ url_for('employee.bookings_trains') }}" class="btn btn-secondary mt-3">
+    ← Back
+  </a>
+
+</div>
+
+{% endblock %}

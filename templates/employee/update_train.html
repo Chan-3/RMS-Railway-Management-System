@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Page title -->
+  <h2 class="fw-bold">Update Train</h2>
+  <hr>
+
+  {% if train %}
+    <!-- Train title + route info -->
+    <h4 class="mb-1">{{ train.train_name }}</h4>
+    <p class="mb-1"><strong>Route:</strong> {{ train.source }} → {{ train.destination }}</p>
+
+    <!-- Current status badge -->
+    <p><strong>Current Status:</strong>
+      {% if train.status == 'ON-TIME' %}
+        <span class="badge text-bg-success">ON-TIME</span>
+      {% elif train.status == 'DELAYED' %}
+        <span class="badge text-bg-warning">DELAYED</span>
+      {% elif train.status == 'CANCELLED' %}
+        <span class="badge text-bg-danger">CANCELLED</span>
+      {% else %}
+        <span class="badge text-bg-secondary">{{ train.status }}</span>
+      {% endif %}
+    </p>
+  {% endif %}
+
+  <!-- Update train form -->
+  <form method="post">
+
+    <!-- Seat capacity section -->
+    <h5 class="mt-4">Seat Capacity</h5>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-4">
+        <label class="form-label">General</label>
+        <input type="number"
+               class="form-control"
+               name="GENERAL"
+               value="{{ seats.GENERAL }}">
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Sleeper</label>
+        <input type="number"
+               class="form-control"
+               name="SLEEPER"
+               value="{{ seats.SLEEPER }}">
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">AC</label>
+        <input type="number"
+               class="form-control"
+               name="AC"
+               value="{{ seats.AC }}">
+      </div>
+    </div>
+
+    <!-- Status section -->
+    <h5 class="mt-4">Update Status</h5>
+    <hr>
+
+    <select name="status" class="form-select">
+      <option value="ON-TIME"   {% if train.status=='ON-TIME' %}selected{% endif %}>ON-TIME</option>
+      <option value="DELAYED"   {% if train.status=='DELAYED' %}selected{% endif %}>DELAYED</option>
+      <option value="CANCELLED" {% if train.status=='CANCELLED' %}selected{% endif %}>CANCELLED</option>
+    </select>
+
+    <!-- Save button -->
+    <button type="submit" class="btn btn-success mt-4">Save</button>
+  </form>
+
+  <!-- Back link -->
+  <a href="{{ url_for('employee.trains') }}" class="btn btn-secondary mt-3">
+    ← Back
+  </a>
+</div>
+
+{% endblock %}

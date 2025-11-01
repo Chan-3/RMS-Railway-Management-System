@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Page container -->
+<div class="container mt-4">
+
+  <h2>Reports Inbox</h2>
+  <hr>
+
+  <!-- Status filter -->
+  <form class="mb-3">
+    <select name="status"
+            class="form-select w-auto d-inline-block"
+            onchange="this.form.submit()">
+      <option value="NEW"      {% if status=='NEW' %}selected{% endif %}>NEW</option>
+      <option value="SEEN"     {% if status=='SEEN' %}selected{% endif %}>SEEN</option>
+      <option value="RESOLVED" {% if status=='RESOLVED' %}selected{% endif %}>RESOLVED</option>
+    </select>
+  </form>
+
+  <!-- Reports list -->
+  {% if rows %}
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Employee</th>
+        <th>Subject</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r.report_id }}</td>
+        <td>{{ r.emp_first }} {{ r.emp_last }}</td>
+        <td>{{ r.subject }}</td>
+        <td>{{ r.status }}</td>
+        <td>{{ r.created_at }}</td>
+        <td>
+          <a class="btn btn-sm btn-primary"
+             href="{{ url_for('supervisor.report_view', report_id=r.report_id) }}">
+             Open
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+  {% else %}
+    <div class="alert alert-info">No reports.</div>
+  {% endif %}
+
+  <!-- Back button -->
+  <a href="{{ url_for('supervisor.dashboard') }}" class="btn btn-secondary mt-3">← Back</a>
+
+</div>
+
+{% endblock %}

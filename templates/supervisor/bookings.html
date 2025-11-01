@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Page container -->
+<div class="container mt-4">
+
+  <h2>Bookings Overview</h2>
+  <hr>
+
+  <!-- Filter form -->
+  <form class="row g-2 mb-3">
+    <!-- Train selector -->
+    <div class="col-md-3">
+      <label class="form-label">Train</label>
+      <select name="train_id" class="form-select">
+        <option value="">-- All --</option>
+        {% for t in trains %}
+        <option value="{{ t.train_id }}" {% if sel_train==t.train_id %}selected{% endif %}>
+          {{ t.name }} ({{ t.train_id }})
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- From date -->
+    <div class="col-md-2">
+      <label class="form-label">From</label>
+      <input type="date" name="from" value="{{ date_from }}" class="form-control">
+    </div>
+
+    <!-- To date -->
+    <div class="col-md-2">
+      <label class="form-label">To</label>
+      <input type="date" name="to" value="{{ date_to }}" class="form-control">
+    </div>
+
+    <!-- Search -->
+    <div class="col-md-3">
+      <label class="form-label">PNR</label>
+      <input name="q" value="{{ q }}" class="form-control" placeholder="Name or PNR">
+    </div>
+
+    <!-- Apply -->
+    <div class="col-md-2 d-flex align-items-end">
+      <button class="btn btn-primary">Apply</button>
+    </div>
+  </form>
+
+  <!-- Results -->
+  {% if rows %}
+  <!-- Responsive table wrapper -->
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>PNR</th>
+          <th>Train</th>
+          <th>Passenger</th>
+          <th>Date</th>
+          <th>Seat</th>
+          <th>Count</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for b in rows %}
+        <tr>
+          <td>{{ b.booking_id }}</td>
+          <td>{{ b.pnr }}</td>
+          <td>{{ b.train_name }}</td>
+          <td>{{ b.first_name }} {{ b.last_name }}</td>
+          <td>{{ b.travel_date }}</td>
+          <td>{{ b.seat_type }}</td>
+          <td>{{ b.passenger_count }}</td>
+          <td>{{ b.status }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </div>
+  {% else %}
+    <div class="alert alert-info">No bookings found.</div>
+  {% endif %}
+
+  <!-- Back button -->
+  <a href="{{ url_for('supervisor.dashboard') }}" class="btn btn-secondary mt-3">← Back</a>
+
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Page container -->
+<div class="container mt-4">
+
+  <h2>Train Status</h2>
+  <hr>
+
+  <!-- If train data exists -->
+  {% if rows %}
+
+  <!-- Status table -->
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Route</th>
+        <th>Status</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for t in rows %}
+      <tr>
+        <!-- Train ID -->
+        <td>{{ t.train_id }}</td>
+
+        <!-- Train Name -->
+        <td>{{ t.train_name }}</td>
+
+        <!-- Route name -->
+        <td>{{ t.source }} → {{ t.destination }}</td>
+
+        <!-- Current status -->
+        <td>{{ t.status }}</td>
+
+        <!-- Update form -->
+        <td>
+          <form method="post" class="d-flex">
+
+            <input type="hidden" name="train_id" value="{{ t.train_id }}">
+
+            <!-- Dropdown select -->
+            <select name="status" class="form-select form-select-sm me-2">
+              <option value="ON-TIME"   {% if t.status=='ON-TIME' %}selected{% endif %}>ON-TIME</option>
+              <option value="DELAYED"   {% if t.status=='DELAYED' %}selected{% endif %}>DELAYED</option>
+              <option value="CANCELLED" {% if t.status=='CANCELLED' %}selected{% endif %}>CANCELLED</option>
+            </select>
+
+            <!-- Submit -->
+            <button class="btn btn-sm btn-primary">Save</button>
+          </form>
+        </td>
+
+      </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+
+  {% else %}
+    <!-- No trains -->
+    <div class="alert alert-info">No trains found.</div>
+  {% endif %}
+
+  <!-- Back button -->
+  <a href="{{ url_for('supervisor.dashboard') }}"
+     class="btn btn-secondary mt-3">
+     ← Back
+  </a>
+
+</div>
+
+{% endblock %}

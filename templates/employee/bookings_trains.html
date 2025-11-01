@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+  <!-- Page title -->
+  <h2>Select Train</h2>
+  <hr>
+
+  {% if trains %}
+  <!-- Train list -->
+  <ul class="list-group">
+    {% for t in trains %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ t.name }}
+      <a href="{{ url_for('employee.bookings_for_train', train_id=t.train_id) }}"
+         class="btn btn-primary btn-sm">
+        View Bookings
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% else %}
+  <div class="alert alert-info text-center">
+    No trains available.
+  </div>
+  {% endif %}
+
+  <!-- Back -->
+  <a href="{{ url_for('employee.dashboard') }}" class="btn btn-secondary mt-3">← Back</a>
+</div>
+
+{% endblock %}

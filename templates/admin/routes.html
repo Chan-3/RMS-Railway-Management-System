@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="fw-bold m-0">Routes</h2>
+    <a href="{{ url_for('admin.route_create') }}" class="btn btn-success">
+      ➕ Create Route
+    </a>
+  </div>
+
+  <hr>
+
+  {% if rows %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Source</th>
+          <th>Destination</th>
+          <th>Distance (km)</th>
+          <th>Duration</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td>{{ r.route_id }}</td>
+          <td>{{ r.source }} ({{ r.source_id }})</td>
+          <td>{{ r.destination }} ({{ r.destination_id }})</td>
+          <td>{{ r.distance_km }}</td>
+          <td>{{ r.duration }}</td>
+
+          <td class="text-center">
+            <div class="d-flex gap-2 justify-content-center">
+
+              <!-- Edit -->
+              <a class="btn btn-sm btn-primary"
+                 href="{{ url_for('admin.route_edit', route_id=r.route_id) }}">
+                ✏ Edit
+              </a>
+
+              <!-- Delete -->
+              <form method="post"
+                action="{{ url_for('admin.route_delete') }}"
+                onsubmit="return confirm('Are you sure? This will remove the route entry.');">
+                <input type="hidden" name="route_id" value="{{ r.route_id }}">
+                <button class="btn btn-sm btn-danger">🗑 Delete</button>
+              </form>
+
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </div>
+
+  {% else %}
+  <div class="alert alert-info">
+    No routes found.
+  </div>
+  {% endif %}
+
+  <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary mt-3">← Back</a>
+
+</div>
+
+{% endblock %}

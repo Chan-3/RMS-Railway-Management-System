@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Page heading -->
+  <h2 class="fw-bold mb-3">My Profile</h2>
+  <hr>
+
+  {% if emp %}
+  <!-- Profile details table -->
+  <div class="col-lg-6 col-md-8 col-12 p-0">
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th>Employee ID</th>
+        <td>{{ emp.emp_id }}</td>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <td>{{ emp.first_name }} {{ emp.last_name }}</td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td>{{ emp.email }}</td>
+      </tr>
+      <tr>
+        <th>Role</th>
+        <td>{{ emp.role }}</td>
+      </tr>
+      <tr>
+        <th>Salary</th>
+        <td>{{ emp.salary }}</td>
+      </tr>
+    </table>
+  </div>
+  {% else %}
+  <!-- If no employee found -->
+  <div class="alert alert-warning">Employee not found</div>
+  {% endif %}
+
+  <!-- Back button -->
+  <a href="{{ url_for('employee.dashboard') }}" class="btn btn-secondary mt-3">← Back</a>
+</div>
+
+{% endblock %}

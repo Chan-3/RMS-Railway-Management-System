@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<style>
+.hero {
+    text-align: center;
+    padding: 70px 20px;
+}
+.hero h1 {
+    font-size: 50px;
+    font-weight: 700;
+}
+.hero p {
+    font-size: 20px;
+    color: #666;
+}
+.features-section {
+    text-align: center;
+    margin-top: 50px;
+}
+.feature-box {
+    padding: 25px;
+    border-radius: 10px;
+    background: #f8f9fa;
+    height: 100%;
+}
+</style>
+
+<div class="hero">
+    <h1>Welcome to Railway Management System</h1>
+    <p>
+        A smarter way to manage trains, bookings, employee tasks, and station operations.
+    </p>
+
+    <div class="mt-4">
+        <a href="/auth/login" class="btn btn-primary btn-lg me-2">Login</a>
+        <a href="/auth/register" class="btn btn-outline-primary btn-lg">Register</a>
+    </div>
+</div>
+
+<hr>
+
+<!-- Features -->
+<div class="features-section container">
+    <h2 class="mb-4">Why RMS?</h2>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="feature-box shadow-sm">
+                <h5 class="fw-bold">Fast Train Booking</h5>
+                <p>Passengers can easily search and book available trains with instant confirmation.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="feature-box shadow-sm">
+                <h5 class="fw-bold">Centralized Admin System</h5>
+                <p>Manage routes, schedules, employees, and station data all in one place.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="feature-box shadow-sm">
+                <h5 class="fw-bold">Real-time Status</h5>
+                <p>Track train status, delays, and operational updates efficiently.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

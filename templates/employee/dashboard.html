@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Page heading -->
+  <h2 class="fw-bold mb-3">Employee Dashboard</h2>
+  <hr>
+
+  <!-- Main options grid -->
+  <div class="row g-3">
+
+    <!-- ✅ View Profile -->
+    <div class="col-md-4">
+      <a href="{{ url_for('employee.profile') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">👤 View Profile</h5>
+            <p class="card-text text-muted">See your registered details.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- ✅ View / Manage Trains -->
+    <div class="col-md-4">
+      <a href="{{ url_for('employee.trains') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">🚆 View / Manage Trains</h5>
+            <p class="card-text text-muted">Check train routes, edit seats & status.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- ✅ Passenger Bookings -->
+    <div class="col-md-4">
+      <a href="{{ url_for('employee.bookings_trains') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">📄 View Passenger Bookings</h5>
+            <p class="card-text text-muted">View bookings per train.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+
+    <!-- ✅ My Assignments -->
+    <div class="col-md-4">
+      <a href="{{ url_for('employee.assignments') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">📌 My Assignments</h5>
+            <p class="card-text text-muted">Trains assigned to me.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- ✅ My Schedule -->
+    <div class="col-md-4">
+      <a href="{{ url_for('employee.my_schedule') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">🗓 My Schedule</h5>
+            <p class="card-text text-muted">View shifts & duties.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- ✅ Reports -->
+    <div class="col-md-4">
+      <a href="{{ url_for('employee.my_reports') }}" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title">📝 Reports</h5>
+            <p class="card-text text-muted">Report to supervisor.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

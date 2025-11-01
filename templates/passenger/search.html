@@ -1,0 +1,197 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Page Title -->
+<h3>Search Trains</h3>
+
+<!-- ===========================
+         Search Form
+     =========================== -->
+<form method="get" class="row g-3 mb-4">
+
+  <!-- SOURCE input -->
+  <div class="col-md-4">
+    <label class="form-label fw-semibold">Source</label>
+
+    <!-- Searchable input container -->
+    <div class="position-relative">
+      <input id="source" name="source" type="text"
+             class="form-control"
+             placeholder="Search source..."
+             autocomplete="off"
+             required
+             value="{{ source }}">
+
+      <!-- Dynamic dropdown list -->
+      <div id="source_list"
+           class="list-group position-absolute w-100"
+           style="z-index:10; max-height:200px; overflow-y:auto; display:none;">
+      </div>
+    </div>
+  </div>
+
+  <!-- DESTINATION input -->
+  <div class="col-md-4">
+    <label class="form-label fw-semibold">Destination</label>
+
+    <!-- Searchable input container -->
+    <div class="position-relative">
+      <input id="destination" name="destination" type="text"
+             class="form-control"
+             placeholder="Search destination..."
+             autocomplete="off"
+             required
+             value="{{ destination }}">
+
+      <!-- Dynamic dropdown list -->
+      <div id="destination_list"
+           class="list-group position-absolute w-100"
+           style="z-index:10; max-height:200px; overflow-y:auto; display:none;">
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit -->
+  <div class="col-md-4 d-flex align-items-end">
+    <button class="btn btn-primary w-100">Search</button>
+  </div>
+
+</form>
+
+
+<!-- ===========================
+     ⚠ Warning message
+     =========================== -->
+{% if message %}
+  <div class="alert alert-warning">{{ message }}</div>
+{% endif %}
+
+
+<!-- ===========================
+         Search Results
+     =========================== -->
+{% if trains and trains|length > 0 %}
+<table class="table table-bordered table-striped align-middle">
+
+  <!-- Header -->
+  <thead class="table-light">
+    <tr>
+      <th>Train</th>
+      <th>Route</th>
+      <th>Class</th>
+      <th>Seats</th>
+      <th>Fare</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <!-- Body -->
+  {% for t in trains %}
+  <tbody>
+
+    <!-- GENERAL -->
+    <tr>
+      <td rowspan="3">{{ t.train_name }}</td>
+      <td rowspan="3">{{ t.source }} → {{ t.destination }}</td>
+
+      <td>GENERAL</td>
+      <td>{{ t.general_seats }}</td>
+      <td>₹{{ t.general_fare }}</td>
+      <td>
+        <a href="/passenger/book?train_id={{ t.train_id }}&route_id={{ t.route_id }}&seat_type=GENERAL"
+           class="btn btn-sm btn-primary">Book</a>
+      </td>
+    </tr>
+
+    <!-- SLEEPER -->
+    <tr>
+      <td>SLEEPER</td>
+      <td>{{ t.sleeper_seats }}</td>
+      <td>₹{{ t.sleeper_fare }}</td>
+      <td>
+        <a href="/passenger/book?train_id={{ t.train_id }}&route_id={{ t.route_id }}&seat_type=SLEEPER"
+           class="btn btn-sm btn-primary">Book</a>
+      </td>
+    </tr>
+
+    <!-- AC -->
+    <tr>
+      <td>AC</td>
+      <td>{{ t.ac_seats }}</td>
+      <td>₹{{ t.ac_fare }}</td>
+      <td>
+        <a href="/passenger/book?train_id={{ t.train_id }}&route_id={{ t.route_id }}&seat_type=AC"
+           class="btn btn-sm btn-primary">Book</a>
+      </td>
+    </tr>
+
+  </tbody>
+  {% endfor %}
+</table>
+{% endif %}
+
+
+<!-- Back -->
+<a href="{{ url_for('passenger.dashboard') }}" class="btn btn-link">
+  ← Dashboard
+</a>
+
+
+<!-- ======================================================
+       Auto-Suggest Dropdown Script for Source/Destination
+     ====================================================== -->
+<script>
+/* Python station list injected into JS */
+let stations = {{ stations | tojson | safe }};
+
+/**
+ * Turns text input into searchable autocomplete
+ * @param {string} inputId - ID of input box
+ * @param {string} listId - ID of suggestion list
+ */
+function makeSearchable(inputId, listId) {
+    const input = document.getElementById(inputId);
+    const box   = document.getElementById(listId);
+
+    input.addEventListener("input", () => {
+        let txt = input.value.toLowerCase();
+        box.innerHTML = "";
+
+        // Filter station list
+        let filtered = stations.filter(s => s.toLowerCase().includes(txt));
+
+        if (!filtered.length) {
+            box.style.display = "none";
+            return;
+        }
+
+        // Build suggestions
+        filtered.forEach(s => {
+            let item = document.createElement("button");
+            item.type = "button";
+            item.className = "list-group-item list-group-item-action";
+            item.textContent = s;
+            item.onclick = () => {
+                input.value = s;
+                box.style.display = "none";
+            };
+            box.appendChild(item);
+        });
+
+        box.style.display = "block";
+    });
+
+    // Hide when clicking outside
+    document.addEventListener("click", e => {
+        if (!input.contains(e.target)) {
+            box.style.display = "none";
+        }
+    });
+}
+
+/* Enable autocomplete on both fields */
+makeSearchable("source", "source_list");
+makeSearchable("destination", "destination_list");
+</script>
+
+{% endblock %}
